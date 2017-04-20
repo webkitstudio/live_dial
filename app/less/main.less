@@ -1,0 +1,36 @@
+@import 'reset';
+@import 'variables';
+@import 'loader';
+@import 'fonts';
+@import 'open-iconic';
+@import 'header';
+@import 'bottomMenu';
+@import 'debateListings';
+@import 'modal';
+@import 'dial';
+@import 'form';
+@import 'pageHero';
+@import 'warped';
+@import 'polls';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.app {
+  height: 100%;
+}
+
+#content {
+  height: ~"calc(100% - 44px)"; /* page height - (header) */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  background-color: @light;
+  font: 15px/20px "Open Sans";
+  overflow: hidden;
+}

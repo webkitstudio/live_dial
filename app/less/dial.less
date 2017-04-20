@@ -1,0 +1,303 @@
+body.modalOpen #content {
+  #chart {
+    background: @darkGray;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .participants {
+    font-size: 10px;
+    text-align: left;
+    margin-bottom: 3px;
+  }
+
+  h1.title,
+  .timeToStart h2,
+  .expired h2 {
+    font-size: 1.2em;
+    line-height: 2em;
+    font-family: "Open Sans Semibold";
+    margin: 5px 0;
+    
+    @media (min-height: 520px) {
+      margin: 15px 0;
+    }
+  }
+  
+  #chart,
+  .participants,
+  #screenDialer,
+  .timeToStart,
+  .expired {
+    display: none;
+  }
+}
+
+body.modalOpen.scheduled #content {
+  #chart,
+  .participants,
+  #screenDialer {
+    display: none;
+  }
+  
+  .timeToStart {
+    margin-top: 30px;
+    display: block;
+    
+    .icon {
+      font-size: 16px;
+    }
+  }
+}
+
+body.modalOpen.expired #content {
+  #chart,
+  .participants,
+  #screenDialer {
+    display: none;
+  }
+  
+  .expired {
+    margin-top: 30px;
+    display: block;
+    
+    .icon {
+      font-size: 16px;
+    }
+  }
+}
+
+body.modalOpen.active #content {
+  #chart,
+  .participants,
+  #screenDialer {
+    display: block;
+  }
+  
+  .timeToStart {
+    display: none;
+  }
+}
+
+#screenDialer {
+  position: relative;
+  height: ~"calc(100% - 60px)";
+    
+  @media (min-height: 520px) {
+    height: ~"calc(100% - 80px)";
+  }
+    
+  .filterSection {
+    height: 42px;
+    
+    @media (min-height: 520px) {
+      margin: 0 0 10px;
+    }
+  }
+  
+  .filters {
+    float: left;
+    
+    &.hide {
+      display: none;
+    }
+    
+    .filter {
+      text-align: center;
+      font-size: 10px;
+      float: left;
+      line-height: 10px;
+      margin-right: 8px;
+      
+      &:before {
+        display: block;
+        content: ' ';
+        width: 10px;
+        height: 10px;
+        float: left;
+        margin-right: 4px;
+      }
+      
+      &[rel="republican"] {
+        &:before {
+          background: #e51b23;
+        }
+      }
+      
+      &[rel="democrat"] {
+        &:before {
+          background: #34aae0;
+        }
+      }
+      
+      &[rel="other"] {
+        &:before {
+          background: #888;
+        }
+      }
+      
+      &[rel="independent"] {
+        &:before {
+          background: #530477;
+        }
+      }
+      
+      &[rel="green"] {
+        &:before {
+          background: #0f7f32;
+        }
+      }
+      
+      &[rel="libertarian"] {
+        &:before {
+          background: #dcb732;
+        }
+      }
+      
+    }
+  }
+  
+  #viewToggle {
+    float: right;
+    color: @lighterGray;
+    text-align: right;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: -3px;
+  }
+  
+  #guide {
+    background-image: url(../images/guide-768x768.png);
+    background-size: 110% auto;
+    background-position: center 0;
+    padding-top: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+  }
+}
+
+#dialContainer {
+  margin: 0 5%;
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  padding-top: 90%;
+  
+  @media (min-width: 768px) {
+    width: 70%;
+    padding-top: 70%;
+    margin: 0 15%;
+  }
+  
+  .waypoints {
+    position: absolute;
+    width: 88%;
+    padding-top: 88%;
+    top: 0;
+    z-index: 50;
+    top: 7%;
+    left: 6%;
+    
+    .waypoint {
+      position: absolute;
+      text-indent: -9999px;
+      overflow: hidden;
+      width: 12%;
+      height: 12%;
+//      border-radius: 50%;
+//      border: 1px solid @darkGray;
+//      background: @lighterGray;
+//      opacity: 0.2;
+
+      &:after {
+          content: ' ';
+          background: @darkGray;
+          width: 6px;
+          height: 6px;
+          display: block;
+          position: absolute;
+          border-radius: 50%;
+          top: ~"calc(50% - 3px)";
+          left: ~"calc(50% - 3px)";
+      }
+      
+      @media (min-width: @mobileLandscape) {
+        border-width: 2px;
+      }
+      
+      /*
+      &:after {
+        content: ' ';
+        position: absolute;
+        width: 60%;
+        height: 80%;
+        background: @lighterGray;
+        border-radius: 50%;
+        top: 10%;
+        left: 10%;
+        
+        @media (min-width: @mobileLandscape) {
+        }
+      }
+      */
+      
+      &:nth-of-type(1) {
+        left: 11%;
+        top: 82%;
+      }
+      
+      &:nth-of-type(2) {
+        left: 1%;
+        top: 31%;
+      }
+      
+      &:nth-of-type(3) {
+        left: 44%;
+        top: 2%;
+      }
+      
+      &:nth-of-type(4) {
+        left: 87%;
+        top: 31%;
+      }
+      
+      &:nth-of-type(5) {
+        left: 78%;
+        top: 82%;
+      }
+    }
+  }
+
+  #dial {
+    border-radius: 50%;
+    background: @darkGray;
+    position: absolute;
+    z-index: 100;
+    width: 70%;
+    height: 70%;
+    top: 20%;
+    left: 15%;
+
+    .button {
+      background: @light;
+      width: 2%;
+      height: 40%;
+      margin: 0 auto;
+      position: relative;
+      top: 8px;
+      border-radius: 4px;
+    }
+
+    .pointer {
+      position: absolute;
+      width: 30%;
+      height: 30%;
+      background: @darkGray;
+      -webkit-transform: scaleX(.3) rotateZ(45deg);
+      left: 35%;
+      top: 0;
+    }
+  }
+}

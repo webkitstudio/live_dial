@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';connect-src *; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <title>Live Dial</title>
+    </head>
+    <body>
+        <div class="app">
+        
+          <header>
+            <h1 class="title">Live Dial</h1>
+          </header>
+          
+          <div id="content"></div>
+          
+          <!--
+          <div id="bottomMenu">
+            <ul class="buttons">
+              <li class="button" rel="debates">
+                <span class="oi icon" data-glyph="dial" title="Debates" aria-hidden="true"></span>
+                <span class="text">Debates</span>
+              </li>
+              <li class="button" rel="polls">
+                <span class="oi icon" data-glyph="bar-chart" title="Polls" aria-hidden="true"></span>
+                <span class="text">Polls</span>
+              </li>
+              <li class="button" rel="profile">
+                <span class="oi icon" data-glyph="person" title="person" aria-hidden="true"></span>
+                <span class="text">Profile</span>
+              </li>
+              <li class="button" rel="more">
+                <span class="oi icon" data-glyph="ellipses" title="More" aria-hidden="true"></span>
+                <span class="text">More</span>
+                <ul class="moreMenu">
+                  <li class="button" rel="archive">
+                    <span class="oi icon" data-glyph="layers" title="layers" aria-hidden="true"></span>
+                    <span class="text">Archive</span>
+                  </li>
+                  <li class="button" rel="settings">
+                    <span class="oi icon" data-glyph="cog" title="cog" aria-hidden="true"></span>
+                    <span class="text">Settings</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          -->
+        </div>
+        <img src="images/icons/open-iconic.min.svg" class="iconic-sprite" style="display:none;" />
+        
+        <script id="templateLoading" type="text/html">
+          <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </script>
+        
+        <script id="templateDebateListings" type="text/html">
+          <h2 class="listingHeader">Debates</h2>
+          <ul id="debateListings"></ul>
+          <h2 class="listingHeader">Channels</h2>
+          <ul id="channelListings"></ul>
+        </script>
+        
+        <script id="templateDebateListing" type="text/html">
+          {{ #items }}
+            <li class="debateListing" id="{{ _id }}">
+              <h2 class="title">{{ title }}</h2>
+              {{ #date }}
+              <p class="date">{{ date }}</p>
+              {{ /date }}
+              {{ #description }}
+              <p class="description">{{ description }}</p>
+              {{ /description }}
+              <ul class="meta">
+                {{ #status }}
+                  <li><span class="status {{ statusClass }}">{{ status }}</span></li>
+                {{ /status }}
+                <li>Participants: <span class="participants">{{ participants }}</span></li>
+              </ul>
+            </li>
+          {{ /items }}
+          {{ ^items }}
+            <li class="listing">No scheduled debates.</li>
+          {{ /items }}
+        </script>
+        
+        <script id="templateDebateModal" type="text/html">
+          <div class="closeButton">
+            <span class="oi icon" data-glyph="arrow-left" title="go back" aria-hidden="true"></span>
+            <span class="text">Go Back</span>
+          </div>
+          <h1 class="title">{{ title }}</h1>
+          <div class="timeToStart">
+            <h2><span class="oi icon" data-glyph="clock" title="clock" aria-hidden="true"></span> Scheduled</h2>
+            <p><span class="time"></span></p>
+          </div>
+          <div class="expired">
+            <h2><span class="oi icon" data-glyph="bullhorn" title="bullhorn" aria-hidden="true"></span> Session Ended</h2>
+            <p>Thanks for participating, this session will now close.</p>
+          </div>
+          <div id="screenDialer">
+            <p class="participants">
+              <span class="label">Participants:</span>
+              <span class="total">{{ participants }}</span>
+            </p>
+            <canvas id="chart"></canvas>
+              <div class="filterSection">
+                <ul class="filters" rel="party">
+                  <li class="filter" rel="republican">Everyone</li>
+                  <li class="filter" rel="other">You</li>
+  <!-- 
+                  <li class="filter" rel="republican">Republican</li>
+                  <li class="filter" rel="democrat">Democrat</li>
+                  <li class="filter" rel="other">Other</li>
+   -->
+                </ul>
+  <!-- 
+                <div id="viewToggle" class="toggle">
+                  <span class="oi icon" data-glyph="eye" title="change view" aria-hidden="true"></span>
+                </div>
+   -->
+              </div>
+            <div id="dialContainer">
+              <ul class="waypoints">
+                <li class="waypoint" data-value="0"><span>Very Negative</li>
+                <li class="waypoint" data-value="1">Negative</li>
+                <li class="waypoint" data-value="2">Neutral</li>
+                <li class="waypoint" data-value="3">Positive</li>
+                <li class="waypoint" data-value="4">Very Positive</li>
+              </ul>
+              <div id="dial">
+                <div class="pointer"></div>
+                <div class="button"></div>    
+              </div>
+              <div id="guide"></div>
+            </div>
+          </div>
+        </script>
+        
+        <script id="templatePolls" type="text/html">
+          <div class="pageHero">
+            <h1>Polls</h1>
+          </div>
+          <ul class="list polls" id="polls"></ul>
+        </script>
+        
+        <script id="templatePollsItem" type="text/html">
+          <li class="listItem">
+            <span class="bar">
+              <span class="votes">1,200 Votes</span>
+            </span>
+            <span class="name">Bernie Sanders</span>
+            <span class="vote">Vote</span>
+          </li>
+        </script>
+        
+        <script id="templateProfile" type="text/html">
+          <div class="pageHero">
+            <h1>Profile</h1>
+            <h2>Selecting a party will average your results with other members of that party</h2>
+          </div>
+          <ul class="options form">
+<!-- 
+            <li class="listItem">
+              <label for="username">
+                <span class="text">Username</span>
+                <input id="username" placeholder="Guest" type="text" />
+                <p class="helpText">
+                  <span class="oi icon" data-glyph="info" title="info" aria-hidden="true"></span>
+                  Optional, only used in chats.
+                </p>
+              </label>
+            </li>
+ -->
+            <li class="listItem radioItem {{ partyRepblican }}">
+              <label for="partyRepblican">
+                <span class="text">Republican</span>
+                <span class="radio">
+                  <span class="oi icon" data-glyph="check" title="check" aria-hidden="true"></span>
+                </span>
+              </label>
+            </li>
+            <li class="listItem radioItem {{ partyDemocrat }}">
+              <label for="partyDemocrat">
+                <span class="text">Democrat</span>
+                <span class="radio">
+                  <span class="oi icon" data-glyph="check" title="check" aria-hidden="true"></span>
+                </span>
+              </label>
+            </li>
+            <li class="listItem radioItem {{ partyOther }}">
+              <label for="partyOther">
+                <span class="text">Other</span>
+                <span class="radio">
+                  <span class="oi icon" data-glyph="check" title="check" aria-hidden="true"></span>
+                </span>
+              </label>
+            </li>
+          </ul>
+        </script>
+        
+        <script type="text/javascript" src="js/lib/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.mustache.min.js"></script>
+        <script type="text/javascript" src="js/lib/mustache.min.js"></script>
+        <script type="text/javascript" src="js/lib/routie.min.js"></script>
+        <script type="text/javascript" src="js/lib/smoothie.min.js"></script>
+        <script type="text/javascript" src="js/lib/CSSPlugin.min.js"></script>
+        <script type="text/javascript" src="js/lib/TweenLite.min.js"></script>
+        <script type="text/javascript" src="js/lib/Draggable.min.js"></script>
+        <script type="text/javascript" src="js/lib/moment.min.js"></script>
+        <script type="text/javascript" src="js/cordovaPolyfill.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+.listingHeader {
+  background: @lighterGray;
+  color: @darkGray;
+  padding: 6px 10px;
+  font-family: "Open Sans Semibold";
+}
+
+.debateListing,
+#debateListings .listing {
+  padding: 15px 10px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  
+  &:last-of-type {
+    border: none;
+  }
+  
+  .title {
+    font-family: "Open Sans Semibold";
+    font-size: 1.1em;
+  }
+  
+  .description,
+  .startTime,
+  .date {
+    margin: 5px 0;
+  }
+  
+  .startTime {
+    font-size: .9em;
+  }
+  
+  .meta {
+    li {
+      display: inline-block;
+      font-size: .9em;
+      margin-right: 5px;
+      
+      .status {
+        display: inline-block;
+        width: 84px;
+        text-align: center;
+        font-size: .8em;
+        text-transform: uppercase;
+        padding: 1px 8px;
+        line-height: 1.6em;
+        color: @light;
+        
+        &.inProgress {
+          background: #0a0;
+        }
+        
+        &.scheduled {
+          background: #fa0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<!-- 
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';connect-src http://localhost:5000 http://debate-dialer.herokuapp.com; style-src 'self' 'unsafe-inline'; media-src *">
+ -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <title>Hello World</title>
+    </head>
+    <body>
+<script>
+
+var host = location.origin.replace(/^http/, 'ws')
+var ws = new WebSocket('ws://localhost:9000/');
+ws.onmessage = function (event) {
+  console.log(event.data);
+};
+      
+</script>
+<strong>Server Stats</strong><br>
+RSS: <div id='rss'></div><br>
+Heap total: <div id='heapTotal'></div><br>
+Heap used: <div id='heapUsed'></div><br>
+    </body>
+</html>

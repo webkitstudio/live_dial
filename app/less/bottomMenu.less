@@ -1,0 +1,108 @@
+#bottomMenu {
+  background: @darkGray;
+  color: @light;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  height: 62px;
+  
+  .buttons {
+    width: 100%;
+    position: relative;
+    @media (min-width: @mobileLandscape) {
+      width: auto;
+      display: inline-block;
+    }
+  }
+  
+  .button {
+    display: inline-block;
+    padding-top: 12px;
+    height: 50px;
+    width: ~"calc(25% - 1px)";
+    border-right: 1px solid @gray;
+    float: left;
+    
+    &.active {
+      .icon,
+      .text {
+        color: #fff;
+      }
+    }
+    
+    @media (min-width: @mobileLandscape) {
+      width: 80px;
+    }
+    
+    &:last-of-type {
+      border: none;
+      width: 25%;
+      @media (min-width: @mobileLandscape) {
+        width: 80px;
+      }
+    }
+    
+    .icon {
+      font-size: 20px;
+      color: #aaa;
+      display: block;
+    }
+    
+    .text {
+      display: block;
+      color: @lightGray;
+      padding-top: 3px;
+    }
+    
+    &[rel='more'] {
+      .moreMenu {
+        position: absolute;
+        right: 4px;
+        top: 150px;
+        background: @darkGray;
+        border-radius: 4px;
+        -webkit-transition-property: opacity, -webkit-transform;
+        -webkit-transition-duration: 250ms, 150ms;
+        -webkit-transition-timing-function: linear, ease;
+        -webkit-transform: translate3d(0, 30px, 0);
+        opacity: 0;
+        
+        @media (min-width: @mobileLandscape) {
+          right: -22px;
+        }
+        
+        &.show {
+          display: block;
+          opacity: 1;
+          top: -100px;
+          -webkit-transform: translate3d(0, 0, 0);
+        }
+        
+        .button {
+          width: 130px;
+          border-color: transparent;
+          height: auto;
+          padding: 14px;
+          clear: left;
+          border-bottom: 1px solid @gray;
+          
+          &:last-of-type {
+            border-bottom: none;
+          }
+          
+          .icon {
+            float: left;
+            margin: 0 10px;
+          }
+          
+          .text {
+            float: left;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}
